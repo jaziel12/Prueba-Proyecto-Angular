@@ -38,4 +38,20 @@ export class StudentsPageComponent {
       }
     });
   }
+  removeStudent(student: Student) {
+    this.students = this.students.filter((stu) => stu.id !== student.id);
+  }
+  editStudent(student: Student) {
+    const dialog = this.dialogService.open(StudentDialogComponent, {
+      data: student,
+    });
+
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        const templArray = (this.students = this.students.map((stu) =>
+          stu.id === student.id ? { ...stu, ...data } : stu
+        ));
+      }
+    });
+  }
 }
